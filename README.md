@@ -24,7 +24,7 @@ except right below the tray, which belongs to the tray.
 ## Settings
 
 - **Only show date/time**: keep just the clock on screen instead of the whole
-  notification area.
+  notification area, along with the "Show desktop" button after it.
 - **Only date/time on the shown taskbar too**: with "Only show date/time" on,
   the rest of the tray stays hidden when the taskbar shows as well. Where it
   would be, the taskbar is see-through. With "Edge below the tray shows only

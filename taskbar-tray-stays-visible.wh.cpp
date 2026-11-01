@@ -2,7 +2,7 @@
 // @id              taskbar-tray-stays-visible
 // @name            Keep System Tray Visible on Auto-Hide Taskbar
 // @description     When the auto-hide taskbar slides away, the notification area (tray icons, clock, notification button) stays on screen. Windows 11 and Windows 10.
-// @version         1.19
+// @version         1.20
 // @author          Local
 // @include         explorer.exe
 // @architecture    x86-64
@@ -24,7 +24,7 @@ except right below the tray, which belongs to the tray.
 ## Settings
 
 - **Only show date/time**: keep just the clock on screen instead of the whole
-  notification area.
+  notification area, along with the "Show desktop" button after it.
 - **Only date/time on the shown taskbar too**: with "Only show date/time" on,
   the rest of the tray stays hidden when the taskbar shows as well. Where it
   would be, the taskbar is see-through. With "Edge below the tray shows only
@@ -1193,6 +1193,16 @@ void ApplyRegion(HWND hWnd) {
         }
 
         keep = clockKnown ? clockRect : trayRect;
+
+        // With just the clock, keep the end of the tray after it too: the
+        // "Show desktop" button.
+        if (clockKnown) {
+            if (window.right - window.left >= window.bottom - window.top) {
+                keep.right = std::max(keep.right, trayRect.right);
+            } else {
+                keep.bottom = std::max(keep.bottom, trayRect.bottom);
+            }
+        }
 
         // Windows 11 lays out the XAML tray and TrayNotifyWnd separately, so
         // the latter can briefly extend past the taskbar.
